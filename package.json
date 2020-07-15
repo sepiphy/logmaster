@@ -1,0 +1,19 @@
+{
+  "name": "logmaster",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/sepiphy/logmaster.git",
+  "author": "Quynh Xuan Nguyen <seriquynh@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1"
+  },
+  "babel": {
+    "presets": ["es2015"]
+  }
+}
