@@ -5,6 +5,8 @@ export default function LogMaster(config) {
   const LEVEL_WARN = 3;
   const LEVEL_ERROR = 4;
 
+  let disable = false;
+
   config = config || {};
 
   const channelName = config.default || 'console';
@@ -41,6 +43,10 @@ export default function LogMaster(config) {
     log(LEVEL_ERROR, message, context);
   }
 
+  function disableUsing(callback) {
+    disable = callback();
+  }
+
   function getLevelName(level) {
     return levelNames[level];
   }
@@ -62,6 +68,9 @@ export default function LogMaster(config) {
   }
 
   async function log(level, message, context) {
+    if (disable) {
+      return;
+    }
     if (level < minLevel) {
       return;
     }
