@@ -1,5 +1,3 @@
-LogMaster on development
-
 ### Usage
 
 Configure a LogMaster instance.
@@ -20,7 +18,7 @@ log.warn('This is a warn message.');
 log.error('This is an error message.');
 ```
 
-Disable all handlers on "production" mode.
+Disable on "production" mode.
 
 ```javascript
 log.disableUsing(() => {
