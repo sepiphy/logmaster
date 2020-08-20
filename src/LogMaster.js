@@ -28,7 +28,7 @@ export default function LogMaster(config) {
   }
 
   async function info(message, context) {
-    log(lEVEL_INFO, message, context);
+    log(LEVEL_INFO, message, context);
   }
 
   async function notice(message, context) {
