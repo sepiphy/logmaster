@@ -8,6 +8,7 @@ export default function LogMaster(config) {
   const LEVEL_ERROR = 4;
 
   let disable = false;
+  let logCallback = console.log;
 
   config = config || {};
 
@@ -19,41 +20,62 @@ export default function LogMaster(config) {
     minLevelStr = config.channels[channelName].level;
   }
 
-  const minLevel = getLevel(minLevelStr);
+  const minLevel = _getLevel(minLevelStr);
 
   const levelNames = [
     'DEBUG', 'INFO', 'NOTICE', 'WARN', 'ERROR',
   ];
 
-  async function debug(message, context) {
+  function debug(message, context) {
     log(LEVEL_DEBUG, message, context);
   }
 
-  async function info(message, context) {
+  function info(message, context) {
     log(LEVEL_INFO, message, context);
   }
 
-  async function notice(message, context) {
+  function notice(message, context) {
     log(LEVEL_NOTICE, message, context);
   }
 
-  async function warn(message, context) {
+  function warn(message, context) {
     log(LEVEL_WARN, message, context);
   }
 
-  async function error(message, context) {
+  function error(message, context) {
     log(LEVEL_ERROR, message, context);
+  }
+
+  function log(level, message, context) {
+    if (disable) {
+      return;
+    }
+    if (level < minLevel) {
+      return;
+    }
+    const dateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const levelName = _getLevelName(level);
+    const finalMessage = `[${dateTime}] ${channelName}.${levelName} ${message}`;
+    if (context === undefined || context === null) {
+      logCallback(finalMessage);
+    } else {
+      logCallback(finalMessage, context);
+    }
   }
 
   function disableUsing(callback) {
     disable = callback();
   }
 
-  function getLevelName(level) {
+  function logUsing(callback) {
+    logCallback = callback;
+  }
+
+  function _getLevelName(level) {
     return levelNames[level];
   }
 
-  function getLevel(levelName) {
+  function _getLevel(levelName) {
     if (levelName.toUpperCase() === 'DEBUG') {
       return 0;
     } else if (levelName.toUpperCase() === 'INFO') {
@@ -69,24 +91,8 @@ export default function LogMaster(config) {
     return 0;
   }
 
-  async function log(level, message, context) {
-    if (disable) {
-      return;
-    }
-    if (level < minLevel) {
-      return;
-    }
-    const dateTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    const levelName = getLevelName(level);
-    const finalMessage = `[${dateTime}] ${channelName}.${levelName} ${message}`;
-    if (context === undefined || context === null) {
-      console.log(finalMessage);
-    } else {
-      console.log(finalMessage, context);
-    }
-  }
-
   return {
     debug, info, notice, warn, error,
+    disableUsing, logUsing,
   };
 }
