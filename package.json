@@ -1,6 +1,6 @@
 {
   "name": "@sepiphy/logmaster",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "repository": "https://github.com/sepiphy/logmaster.git",
   "author": "Quynh Xuan Nguyen <seriquynh@gmail.com>",
