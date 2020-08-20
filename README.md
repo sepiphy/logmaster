@@ -3,9 +3,12 @@
 Configure a LogMaster instance.
 
 ```javascript
-const { LogMaster } = require('logmaster').default;
+const { LogMaster } = require('logmaster');
+// import { LogMaster } from 'logmaster';
 
-const log = LogMaster();
+const log = LogMaster({
+    name: 'YourAppName',
+});
 ```
 
 Use log in your code.

@@ -9,6 +9,9 @@
     "build": "babel src --out-dir dist",
     "prepublish": "yarn run build"
   },
+  "dependencies": {
+    "moment": "^2.27.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

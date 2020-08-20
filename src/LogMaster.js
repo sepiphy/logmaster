@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default function LogMaster(config) {
   const LEVEL_DEBUG = 0;
   const LEVEL_INFO = 1;
@@ -9,7 +11,7 @@ export default function LogMaster(config) {
 
   config = config || {};
 
-  const channelName = config.default || 'console';
+  const channelName = config.name || 'console';
 
   let minLevelStr = 'DEBUG';
 
@@ -74,12 +76,13 @@ export default function LogMaster(config) {
     if (level < minLevel) {
       return;
     }
-    const now = new Date();
+    const dateTime = moment().format('YYYY-MM-DD HH:mm:ss');
     const levelName = getLevelName(level);
+    const finalMessage = `[${dateTime}] ${channelName}.${levelName} ${message}`;
     if (context === undefined || context === null) {
-      console.log(`[${now.toDateString()}] ${levelName} ${message}`);
+      console.log(finalMessage);
     } else {
-      console.log(`[${now.toDateString()}] ${levelName} ${message}`, context);
+      console.log(finalMessage, context);
     }
   }
 
